@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5d62a02a13b648bfa94a676d1c00363c" Name="Diagram1">
+        <EntityTypeShape EntityType="MusicDatabaseModel.sys_arragement" Width="1.5" PointX="3" PointY="1.625" />
+        <EntityTypeShape EntityType="MusicDatabaseModel.sys_authority" Width="1.5" PointX="3" PointY="8.25" />
+        <EntityTypeShape EntityType="MusicDatabaseModel.sys_function" Width="1.5" PointX="0.75" PointY="10.25" />
+        <EntityTypeShape EntityType="MusicDatabaseModel.sys_usergroup" Width="1.5" PointX="0.75" PointY="6.625" />
+        <EntityTypeShape EntityType="MusicDatabaseModel.sys_userinfo" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="MusicDatabaseModel.sys_userlog" Width="1.5" PointX="3" PointY="5.125" />
+        <EntityTypeShape EntityType="MusicDatabaseModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MusicDatabaseModel.sys_vw_userinfo" Width="1.5" PointX="5.75" PointY="3.75" />
+        <AssociationConnector Association="MusicDatabaseModel.FK_sys_arragement_sys_usergroup" />
+        <AssociationConnector Association="MusicDatabaseModel.FK_sys_arragement_sys_userinfo" />
+        <AssociationConnector Association="MusicDatabaseModel.FK_sys_authority_sys_function" />
+        <AssociationConnector Association="MusicDatabaseModel.FK_sys_authority_sys_usergroup" />
+        <AssociationConnector Association="MusicDatabaseModel.FK_sys_userlog_sys_userinfo" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

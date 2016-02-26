@@ -1,0 +1,244 @@
+﻿@{
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+@using Armys.MusicEntity
+@using Armys.MusicTool
+@model Armys.MusicEntity.ResultObjClass
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12 userList">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <span class="text-muted small pull-right">最后更新：<i class="fa fa-clock-o"></i> @DateTime.Now.ToString("yyyy-MM-dd hh:mm")</span>
+                    <h2>用户管理</h2>
+                    <p>
+                        所有用户必须通过邮件验证
+                    </p>
+                    
+                    <div class="mail-tools tooltip-demo m-t-md">
+                        <div class="btn-group pull-right">
+                            <form method="POST" action="/User/UserQuery" class="pull-right mail-search">
+                                <div class="input-group">
+                                    <input type="text" placeholder="查找用户" name="searchValue" value="@ViewBag.searchValue" class="form-control input-sm">
+                                    <span class=" input-group-btn">
+                                        <button type="submit" class="btn btn-sm btn-primary"> <i class="fa fa-search"></i> 搜索</button>
+                                    </span>
+
+                                </div>
+                            </form>
+                        </div>
+                        <button class="btn btn-outline btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="新增用户"><i class="fa fa-plus"></i> 添加用户</button>
+                    </div>
+                    <div class="clients-list">
+                        <ul class="nav nav-tabs">
+                            <span class="pull-right small text-muted">@Model.PageTotalCount 个用户</span>
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab-1" aria-expanded="true"><i class="fa fa-user"></i> 系统用户</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab-1" class="active">
+                                <div class="slimScrollDiv" style="position: relative; width: auto; height: 100%;">
+                                    <div class="full-height-scroll" style="width: auto; height: 100%;">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover">
+                                                <tbody>
+                                                    @{
+                                                        var userList = Model.PageObject as List<SysUserQueryEntity>;
+                                                        if (userList != null)
+                                                        {
+                                                            foreach (var item in userList)
+                                                            {
+                                                                <tr class="get_userInfo">
+                                                                    <td class="client-avatar"><img alt="image" src="@item.HeadPortrait"> </td>
+                                                                    <td>
+                                                                        <a data-toggle="tab" href="#contact-1" class="client-link" aria-expanded="true">@item.Name</a>
+                                                                    </td>
+                                                                    <td><a href="javascript:" class="groupName" data-GroupId="1">@item.GroupName</a></td>
+                                                                    <td class="hide personalinformation">@item.Personalinformation</td>
+                                                                    <td class="hide remark">@item.Remark</td>
+                                                                    @if (!string.IsNullOrEmpty(item.MobilePhone))
+                                                                    {
+                                                                        <td class="contact-type">
+                                                                            <i class="fa fa-phone"> </i>
+                                                                        </td>
+                                                                        <td> @item.MobilePhone</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td class="contact-type">
+                                                                            <i class="fa fa-envelope"> </i>
+                                                                        </td>
+                                                                        <td>@item.Email</td>
+                                                                    }
+                                                                    <td class="client-status">
+                                                                        @if (!item.GroupStatus)
+                                                                        {
+                                                                            if ("未分配角色" == item.GroupName)
+                                                                            {
+                                                                                <span class="label label-danger">未分配角色</span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <span class="label label-info">待激活角色</span>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            if (item.Status)
+                                                                            {
+                                                                                <span class="label label-primary">可用</span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <span class="label label-warning">不可用</span>
+                                                                            }
+                                                                        }
+
+                                                                    </td>
+                                                                    <td class="project-actions">
+                                                                        <button class="btn btn-outline btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="查看详细信息">
+                                                                            <i class="fa fa-eye"></i>
+                                                                        </button>
+                                                                        <button class="btn btn-outline btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="编辑">
+                                                                            <i class="fa fa-pencil"></i>
+                                                                        </button>
+                                                                        <button class="btn btn-outline btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="删除">
+                                                                            <i class="fa fa-trash-o"></i>
+                                                                        </button>
+                                                                        <button class="btn btn-outline btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="删除已分配角色">
+                                                                            <i class="fa fa-tags"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td colspan="5" class="client-avatar text-center">找不到相关信息</td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                            <div class="col-sm-6">
+                                                <div class="dataTables_info" id="sample_1_info">
+                                                    当前页: @Model.PageIndex&nbsp;&nbsp;总页数: @Model.PageCount
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="dataTables_paginate paging_bootstrap pagination">
+                                                    @Html.ShowPageNavigate(Model)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 hide userInfo">
+            <div class="ibox ">
+                <div class="ibox-content">
+                    <div class="tab-content">
+                        <div id="contact-1" class="tab-pane active">
+                            <div class="row m-b-lg">
+                                <div class="col-lg-4 text-center">
+                                    <h2 id="user-name"></h2>
+                                    <div class="m-b-sm">
+                                        <img alt="image" id="user-headportrait" class="img-circle" src="" style="width: 62px">
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <h3>
+                                        个人简介
+                                    </h3>
+
+                                    <p>
+                                        <a class="btn btn-xs btn-warning"><i class="fa fa-tag"></i> <b id="group-Name"></b></a>
+                                    </p>
+                                    <p id="user-personalinformation">
+                                    </p>
+                                    <br>
+                                    <a href="/News/SendEmail" class="btn btn-primary btn-sm btn-block">
+                                        <i class="fa fa-envelope"></i> 发送消息
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="client-detail">
+                                <div class="slimScrollDiv" style="position: relative; width: auto; height: 100%;">
+                                    <div class="full-height-scroll" style="width: auto; height: 100%;">
+
+                                        <strong>当前动态</strong>
+
+                                        <ul class="list-group clear-list">
+                                            <li class="list-group-item fist-item">
+                                                <span class="pull-right"> 09:00</span> 请联系我
+                                            </li>
+                                            <li class="list-group-item">
+                                                <span class="pull-right"> 10:16 </span> 签合同
+                                            </li>
+                                            <li class="list-group-item">
+                                                <span class="pull-right"> 08:22 </span> 开新公司
+                                            </li>
+                                            <li class="list-group-item">
+                                                <span class="pull-right"> 11:06 </span> 打电话给李四
+                                            </li>
+                                        </ul>
+                                        <strong>备注</strong>
+                                        <p id="user-remark">
+                                        </p>
+                                        <hr>
+                                        <strong>时间轴</strong>
+                                        <div id="vertical-timeline" class="vertical-container light-timeline">
+                                            <div class="vertical-timeline-block">
+                                                <div class="vertical-timeline-icon navy-bg">
+                                                    <i class="fa fa-briefcase"></i>
+                                                </div>
+
+                                                <div class="vertical-timeline-content">
+                                                    <h2>会议</h2>
+                                                    <p>
+                                                        上一年的销售业绩发布会。总结产品营销和销售趋势及销售的现状。
+                                                    </p>
+                                                    <a href="#" class="btn btn-sm btn-primary"> 更多信息</a>
+                                                    <span class="vertical-date">
+                                                        今天 <br>
+                                                        <small>2月3日</small>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="vertical-timeline-block">
+                                                <div class="vertical-timeline-icon lazur-bg">
+                                                    <i class="fa fa-user-md"></i>
+                                                </div>
+
+                                                <div class="vertical-timeline-content">
+                                                    <h2>公司年会</h2>
+                                                    <p>发年终奖啦，啦啦啦~~</p>
+                                                    <span class="vertical-date">前天 <br><small>2月1日</small></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 316.118px; background: rgb(0, 0, 0);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(51, 51, 51);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/Scripts/user/user-query.js"></script>
+}

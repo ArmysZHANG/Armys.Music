@@ -1,0 +1,7 @@
+D:\WebStudy\Armys\Armys.Music\Armys.MusicTool\bin\Release\Armys.MusicTool.dll
+D:\WebStudy\Armys\Armys.Music\Armys.MusicTool\bin\Release\Armys.MusicTool.pdb
+D:\WebStudy\Armys\Armys.Music\Armys.MusicTool\obj\Release\Armys.MusicTool.csprojResolveAssemblyReference.cache
+D:\WebStudy\Armys\Armys.Music\Armys.MusicTool\obj\Release\Armys.MusicTool.dll
+D:\WebStudy\Armys\Armys.Music\Armys.MusicTool\obj\Release\Armys.MusicTool.pdb
+D:\WebStudy\Armys\Armys.Music\Armys.MusicTool\bin\Release\Armys.MusicEntity.dll
+D:\WebStudy\Armys\Armys.Music\Armys.MusicTool\bin\Release\Armys.MusicEntity.pdb

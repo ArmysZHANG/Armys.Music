@@ -1,0 +1,54 @@
+﻿@using Armys.MusicSystemUI.Models
+@using Armys.MusicTool
+@{
+    ViewBag.Title = "登录";
+}
+
+@section styles {
+    <link href="~/Content/user/login.css" rel="stylesheet" />
+}
+<div class="container">
+    <div class="row text-center logo-control">
+        <div class="col-md-12">
+            <img class="logo" src="/Images/logo.png">
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+            <div class="panel-body">
+                <form role="form" data-validate="parsley" id="SignIn_From" action="/User/Login" method="POST">
+                    <hr>
+                    <h5>乐随心动，@System.Web.Configuration.WebConfigurationManager.AppSettings["SystemName"]</h5>
+                    <br>
+                    <div class="form-group input-group">
+                        <span class="input-group-addon bg-info"><i class="fa fa-tag"></i></span>
+                        <input type="text" class="form-control" name="Name" value="@(Context.Request.Cookies["userInfo"] == null ? "" : new Codecs().Decode(Context.Request.Cookies["userInfo"]["Name"], "UTF-8"))" placeholder="您的用户名" data-required="用户名">
+                    </div>
+                    <div class="form-group input-group">
+                        <span class="input-group-addon bg-info"><i class="fa fa-lock"></i></span>
+                        <input type="password" class="form-control" name="Password" value="@(Context.Request.Cookies["passwordSet"] == null ? "" : new EncryptHelper().Decrypt(Context.Request.Cookies["passwordSet"]["password"], new ReadSystemConfig().GetSystemConfig("SystemKey")))" placeholder="您的密码" data-required="密码">
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox checkbox-success">
+                            <input id="checkbox4" @(Context.Request.Cookies["userInfo"] == null ? "" : Context.Request.Cookies["userInfo"]["RememberPassword"] == "on" ? "checked='checked'" : "") type="checkbox" name="rememberPassword">
+                            <label for="checkbox4">
+                                记住密码
+                            </label>
+                            <span class="pull-right">
+                                <a href="/User/ForgotPassword">忘记密码 ? </a>
+                            </span>
+                        </div>
+                    </div>
+                    <input type="button" class="btn btn-primary" id="SignIn" value="登 录" />
+                </form>
+                <hr>
+                <p class="copy">&copy; @System.Web.Configuration.WebConfigurationManager.AppSettings["SystemVersion"]</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/user/login.js"></script>
+}

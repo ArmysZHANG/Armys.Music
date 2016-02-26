@@ -1,0 +1,5 @@
+D:\WebStudy\Armys\Armys.Music\Armys.MusicEntity\bin\Release\Armys.MusicEntity.dll
+D:\WebStudy\Armys\Armys.Music\Armys.MusicEntity\bin\Release\Armys.MusicEntity.pdb
+D:\WebStudy\Armys\Armys.Music\Armys.MusicEntity\obj\Release\Armys.MusicEntity.dll
+D:\WebStudy\Armys\Armys.Music\Armys.MusicEntity\obj\Release\Armys.MusicEntity.pdb
+D:\WebStudy\Armys\Armys.Music\Armys.MusicEntity\obj\Release\Armys.MusicEntity.csprojResolveAssemblyReference.cache

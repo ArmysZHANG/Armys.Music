@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MusicDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sys_arragement">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userinfo_id" Type="int" Nullable="false" />
+    <Property Name="usergroup_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sys_authority">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="usergroup_id" Type="int" Nullable="false" />
+    <Property Name="function_id" Type="int" Nullable="false" />
+    <Property Name="display" Type="bit" Nullable="false" />
+    <Property Name="edit" Type="bit" Nullable="false" />
+    <Property Name="delete" Type="bit" Nullable="false" />
+    <Property Name="insert" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sys_function">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="controller" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="action" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="function_id" Type="int" Nullable="false" />
+    <Property Name="ico" Type="varchar" MaxLength="30" />
+    <Property Name="arrow" Type="varchar" MaxLength="30" />
+    <Property Name="sequence" Type="int" />
+  </EntityType>
+  <EntityType Name="sys_usergroup">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="status" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sys_userinfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="30" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="headportrait" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="status" Type="bit" Nullable="false" />
+    <Property Name="datebirth" Type="date" />
+    <Property Name="mobilephone" Type="varchar" MaxLength="11" />
+    <Property Name="officephone" Type="varchar" MaxLength="16" />
+    <Property Name="qqnumber" Type="varchar" MaxLength="12" />
+    <Property Name="homeaddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="personalinformation" Type="nvarchar" MaxLength="100" />
+    <Property Name="remark" Type="nvarchar" MaxLength="80" />
+  </EntityType>
+  <EntityType Name="sys_userlog">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userinfo_id" Type="int" Nullable="false" />
+    <Property Name="ip" Type="nvarchar" MaxLength="16" />
+    <Property Name="computername" Type="nvarchar" MaxLength="16" />
+    <Property Name="modifytime" Type="datetime" Nullable="false" />
+    <Property Name="operationmethod" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“MusicDatabase.dbo.sys_vw_userinfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="sys_vw_userinfo">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="headportrait" />
+      <PropertyRef Name="groupid" />
+      <PropertyRef Name="password" />
+      <PropertyRef Name="status" />
+      <PropertyRef Name="groupname" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="headportrait" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="groupid" Type="int" Nullable="false" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="status" Type="bit" Nullable="false" />
+    <Property Name="groupname" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_sys_arragement_sys_usergroup">
+    <End Role="sys_usergroup" Type="Self.sys_usergroup" Multiplicity="1" />
+    <End Role="sys_arragement" Type="Self.sys_arragement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sys_usergroup">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="sys_arragement">
+        <PropertyRef Name="usergroup_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_sys_arragement_sys_userinfo">
+    <End Role="sys_userinfo" Type="Self.sys_userinfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="sys_arragement" Type="Self.sys_arragement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sys_userinfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="sys_arragement">
+        <PropertyRef Name="userinfo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_sys_authority_sys_function">
+    <End Role="sys_function" Type="Self.sys_function" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="sys_authority" Type="Self.sys_authority" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sys_function">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="sys_authority">
+        <PropertyRef Name="function_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_sys_authority_sys_usergroup">
+    <End Role="sys_usergroup" Type="Self.sys_usergroup" Multiplicity="1" />
+    <End Role="sys_authority" Type="Self.sys_authority" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sys_usergroup">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="sys_authority">
+        <PropertyRef Name="usergroup_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_sys_userlog_sys_userinfo">
+    <End Role="sys_userinfo" Type="Self.sys_userinfo" Multiplicity="1" />
+    <End Role="sys_userlog" Type="Self.sys_userlog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sys_userinfo">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="sys_userlog">
+        <PropertyRef Name="userinfo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MusicDatabaseModelStoreContainer">
+    <EntitySet Name="sys_arragement" EntityType="Self.sys_arragement" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sys_authority" EntityType="Self.sys_authority" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sys_function" EntityType="Self.sys_function" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sys_usergroup" EntityType="Self.sys_usergroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sys_userinfo" EntityType="Self.sys_userinfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sys_userlog" EntityType="Self.sys_userlog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sys_vw_userinfo" EntityType="Self.sys_vw_userinfo" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [sys_vw_userinfo].[id] AS [id], 
+    [sys_vw_userinfo].[name] AS [name], 
+    [sys_vw_userinfo].[headportrait] AS [headportrait], 
+    [sys_vw_userinfo].[groupid] AS [groupid], 
+    [sys_vw_userinfo].[password] AS [password], 
+    [sys_vw_userinfo].[status] AS [status], 
+    [sys_vw_userinfo].[groupname] AS [groupname]
+    FROM [dbo].[sys_vw_userinfo] AS [sys_vw_userinfo]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_sys_arragement_sys_usergroup" Association="Self.FK_sys_arragement_sys_usergroup">
+      <End Role="sys_usergroup" EntitySet="sys_usergroup" />
+      <End Role="sys_arragement" EntitySet="sys_arragement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sys_arragement_sys_userinfo" Association="Self.FK_sys_arragement_sys_userinfo">
+      <End Role="sys_userinfo" EntitySet="sys_userinfo" />
+      <End Role="sys_arragement" EntitySet="sys_arragement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sys_authority_sys_function" Association="Self.FK_sys_authority_sys_function">
+      <End Role="sys_function" EntitySet="sys_function" />
+      <End Role="sys_authority" EntitySet="sys_authority" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sys_authority_sys_usergroup" Association="Self.FK_sys_authority_sys_usergroup">
+      <End Role="sys_usergroup" EntitySet="sys_usergroup" />
+      <End Role="sys_authority" EntitySet="sys_authority" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sys_userlog_sys_userinfo" Association="Self.FK_sys_userlog_sys_userinfo">
+      <End Role="sys_userinfo" EntitySet="sys_userinfo" />
+      <End Role="sys_userlog" EntitySet="sys_userlog" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

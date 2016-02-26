@@ -1,0 +1,53 @@
+﻿html {
+    height: 100%;
+}
+
+body.gray-bg {
+    height: auto;
+    background: url(/Images/login-background.jpg) no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: rgba(255,255,255,.95);
+}
+.logo-control {
+    padding-top: 200px;
+}
+.logo {
+    width: 88px;
+    height: 88px;
+}
+
+.bg-info {
+    background-color: #21b9bb;
+    border-color: #21b9bb;
+    color: #FFF;
+    height: 34px;
+}
+
+.btn-primary {
+    background-color: #1ab394;
+    border-color: #1ab394;
+    color: #FFF;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary{
+    background-color: #18a689;
+    border-color: #18a689;
+}
+.copy {
+    text-align: center;
+    font-size: 20px;
+}
+@media (max-height: 680px) {
+  .logo-control {
+      padding-top: 0;
+  }
+}
+.showSweetAlert {
+    -ms-opacity: 0.7;
+    opacity: 0.7;
+}

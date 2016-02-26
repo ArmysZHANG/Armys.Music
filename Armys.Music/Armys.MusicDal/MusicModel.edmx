@@ -1,0 +1,547 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MusicDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sys_arragement">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userinfo_id" Type="int" Nullable="false" />
+          <Property Name="usergroup_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys_authority">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usergroup_id" Type="int" Nullable="false" />
+          <Property Name="function_id" Type="int" Nullable="false" />
+          <Property Name="display" Type="bit" Nullable="false" />
+          <Property Name="edit" Type="bit" Nullable="false" />
+          <Property Name="delete" Type="bit" Nullable="false" />
+          <Property Name="insert" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys_function">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="controller" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="action" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="function_id" Type="int" Nullable="false" />
+          <Property Name="ico" Type="varchar" MaxLength="30" />
+          <Property Name="arrow" Type="varchar" MaxLength="30" />
+          <Property Name="sequence" Type="int" />
+        </EntityType>
+        <EntityType Name="sys_usergroup">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys_userinfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="30" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="headportrait" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="status" Type="bit" Nullable="false" />
+          <Property Name="datebirth" Type="date" />
+          <Property Name="mobilephone" Type="varchar" MaxLength="11" />
+          <Property Name="officephone" Type="varchar" MaxLength="16" />
+          <Property Name="qqnumber" Type="varchar" MaxLength="12" />
+          <Property Name="homeaddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="personalinformation" Type="nvarchar" MaxLength="100" />
+          <Property Name="remark" Type="nvarchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="sys_userlog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userinfo_id" Type="int" Nullable="false" />
+          <Property Name="ip" Type="nvarchar" MaxLength="16" />
+          <Property Name="computername" Type="nvarchar" MaxLength="16" />
+          <Property Name="modifytime" Type="datetime" Nullable="false" />
+          <Property Name="operationmethod" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“MusicDatabase.dbo.sys_vw_userinfo”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="sys_vw_userinfo">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="headportrait" />
+            <PropertyRef Name="groupid" />
+            <PropertyRef Name="password" />
+            <PropertyRef Name="status" />
+            <PropertyRef Name="groupname" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="headportrait" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="groupid" Type="int" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="status" Type="bit" Nullable="false" />
+          <Property Name="groupname" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_sys_arragement_sys_usergroup">
+          <End Role="sys_usergroup" Type="Self.sys_usergroup" Multiplicity="1" />
+          <End Role="sys_arragement" Type="Self.sys_arragement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sys_usergroup">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sys_arragement">
+              <PropertyRef Name="usergroup_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sys_arragement_sys_userinfo">
+          <End Role="sys_userinfo" Type="Self.sys_userinfo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="sys_arragement" Type="Self.sys_arragement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sys_userinfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sys_arragement">
+              <PropertyRef Name="userinfo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sys_authority_sys_function">
+          <End Role="sys_function" Type="Self.sys_function" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="sys_authority" Type="Self.sys_authority" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sys_function">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sys_authority">
+              <PropertyRef Name="function_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sys_authority_sys_usergroup">
+          <End Role="sys_usergroup" Type="Self.sys_usergroup" Multiplicity="1" />
+          <End Role="sys_authority" Type="Self.sys_authority" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sys_usergroup">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sys_authority">
+              <PropertyRef Name="usergroup_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sys_userlog_sys_userinfo">
+          <End Role="sys_userinfo" Type="Self.sys_userinfo" Multiplicity="1" />
+          <End Role="sys_userlog" Type="Self.sys_userlog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sys_userinfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sys_userlog">
+              <PropertyRef Name="userinfo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MusicDatabaseModelStoreContainer">
+          <EntitySet Name="sys_arragement" EntityType="Self.sys_arragement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_authority" EntityType="Self.sys_authority" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_function" EntityType="Self.sys_function" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_usergroup" EntityType="Self.sys_usergroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_userinfo" EntityType="Self.sys_userinfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_userlog" EntityType="Self.sys_userlog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_vw_userinfo" EntityType="Self.sys_vw_userinfo" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [sys_vw_userinfo].[id] AS [id], 
+    [sys_vw_userinfo].[name] AS [name], 
+    [sys_vw_userinfo].[headportrait] AS [headportrait], 
+    [sys_vw_userinfo].[groupid] AS [groupid], 
+    [sys_vw_userinfo].[password] AS [password], 
+    [sys_vw_userinfo].[status] AS [status], 
+    [sys_vw_userinfo].[groupname] AS [groupname]
+    FROM [dbo].[sys_vw_userinfo] AS [sys_vw_userinfo]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_sys_arragement_sys_usergroup" Association="Self.FK_sys_arragement_sys_usergroup">
+            <End Role="sys_usergroup" EntitySet="sys_usergroup" />
+            <End Role="sys_arragement" EntitySet="sys_arragement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sys_arragement_sys_userinfo" Association="Self.FK_sys_arragement_sys_userinfo">
+            <End Role="sys_userinfo" EntitySet="sys_userinfo" />
+            <End Role="sys_arragement" EntitySet="sys_arragement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sys_authority_sys_function" Association="Self.FK_sys_authority_sys_function">
+            <End Role="sys_function" EntitySet="sys_function" />
+            <End Role="sys_authority" EntitySet="sys_authority" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sys_authority_sys_usergroup" Association="Self.FK_sys_authority_sys_usergroup">
+            <End Role="sys_usergroup" EntitySet="sys_usergroup" />
+            <End Role="sys_authority" EntitySet="sys_authority" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sys_userlog_sys_userinfo" Association="Self.FK_sys_userlog_sys_userinfo">
+            <End Role="sys_userinfo" EntitySet="sys_userinfo" />
+            <End Role="sys_userlog" EntitySet="sys_userlog" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MusicDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MusicDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sys_arragement" EntityType="MusicDatabaseModel.sys_arragement" />
+          <EntitySet Name="sys_authority" EntityType="MusicDatabaseModel.sys_authority" />
+          <EntitySet Name="sys_function" EntityType="MusicDatabaseModel.sys_function" />
+          <EntitySet Name="sys_usergroup" EntityType="MusicDatabaseModel.sys_usergroup" />
+          <EntitySet Name="sys_userinfo" EntityType="MusicDatabaseModel.sys_userinfo" />
+          <EntitySet Name="sys_userlog" EntityType="MusicDatabaseModel.sys_userlog" />
+          <EntitySet Name="sysdiagrams" EntityType="MusicDatabaseModel.sysdiagrams" />
+          <EntitySet Name="sys_vw_userinfo" EntityType="MusicDatabaseModel.sys_vw_userinfo" />
+          <AssociationSet Name="FK_sys_arragement_sys_usergroup" Association="MusicDatabaseModel.FK_sys_arragement_sys_usergroup">
+            <End Role="sys_usergroup" EntitySet="sys_usergroup" />
+            <End Role="sys_arragement" EntitySet="sys_arragement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sys_arragement_sys_userinfo" Association="MusicDatabaseModel.FK_sys_arragement_sys_userinfo">
+            <End Role="sys_userinfo" EntitySet="sys_userinfo" />
+            <End Role="sys_arragement" EntitySet="sys_arragement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sys_authority_sys_function" Association="MusicDatabaseModel.FK_sys_authority_sys_function">
+            <End Role="sys_function" EntitySet="sys_function" />
+            <End Role="sys_authority" EntitySet="sys_authority" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sys_authority_sys_usergroup" Association="MusicDatabaseModel.FK_sys_authority_sys_usergroup">
+            <End Role="sys_usergroup" EntitySet="sys_usergroup" />
+            <End Role="sys_authority" EntitySet="sys_authority" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sys_userlog_sys_userinfo" Association="MusicDatabaseModel.FK_sys_userlog_sys_userinfo">
+            <End Role="sys_userinfo" EntitySet="sys_userinfo" />
+            <End Role="sys_userlog" EntitySet="sys_userlog" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="sys_arragement">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userinfo_id" Type="Int32" Nullable="false" />
+          <Property Name="usergroup_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="sys_usergroup" Relationship="MusicDatabaseModel.FK_sys_arragement_sys_usergroup" FromRole="sys_arragement" ToRole="sys_usergroup" />
+          <NavigationProperty Name="sys_userinfo" Relationship="MusicDatabaseModel.FK_sys_arragement_sys_userinfo" FromRole="sys_arragement" ToRole="sys_userinfo" />
+        </EntityType>
+        <EntityType Name="sys_authority">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usergroup_id" Type="Int32" Nullable="false" />
+          <Property Name="function_id" Type="Int32" Nullable="false" />
+          <Property Name="display" Type="Boolean" Nullable="false" />
+          <Property Name="edit" Type="Boolean" Nullable="false" />
+          <Property Name="delete" Type="Boolean" Nullable="false" />
+          <Property Name="insert" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="sys_function" Relationship="MusicDatabaseModel.FK_sys_authority_sys_function" FromRole="sys_authority" ToRole="sys_function" />
+          <NavigationProperty Name="sys_usergroup" Relationship="MusicDatabaseModel.FK_sys_authority_sys_usergroup" FromRole="sys_authority" ToRole="sys_usergroup" />
+        </EntityType>
+        <EntityType Name="sys_function">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="controller" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="action" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="function_id" Type="Int32" Nullable="false" />
+          <Property Name="ico" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="arrow" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="sequence" Type="Int32" />
+          <NavigationProperty Name="sys_authority" Relationship="MusicDatabaseModel.FK_sys_authority_sys_function" FromRole="sys_function" ToRole="sys_authority" />
+        </EntityType>
+        <EntityType Name="sys_usergroup">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="sys_arragement" Relationship="MusicDatabaseModel.FK_sys_arragement_sys_usergroup" FromRole="sys_usergroup" ToRole="sys_arragement" />
+          <NavigationProperty Name="sys_authority" Relationship="MusicDatabaseModel.FK_sys_authority_sys_usergroup" FromRole="sys_usergroup" ToRole="sys_authority" />
+        </EntityType>
+        <EntityType Name="sys_userinfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="headportrait" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Boolean" Nullable="false" />
+          <Property Name="datebirth" Type="DateTime" Precision="0" />
+          <Property Name="mobilephone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="officephone" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="qqnumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="homeaddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="personalinformation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="remark" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="sys_arragement" Relationship="MusicDatabaseModel.FK_sys_arragement_sys_userinfo" FromRole="sys_userinfo" ToRole="sys_arragement" />
+          <NavigationProperty Name="sys_userlog" Relationship="MusicDatabaseModel.FK_sys_userlog_sys_userinfo" FromRole="sys_userinfo" ToRole="sys_userlog" />
+        </EntityType>
+        <EntityType Name="sys_userlog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userinfo_id" Type="Int32" Nullable="false" />
+          <Property Name="ip" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="computername" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="modifytime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="operationmethod" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="sys_userinfo" Relationship="MusicDatabaseModel.FK_sys_userlog_sys_userinfo" FromRole="sys_userlog" ToRole="sys_userinfo" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="sys_vw_userinfo">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="headportrait" />
+            <PropertyRef Name="groupid" />
+            <PropertyRef Name="password" />
+            <PropertyRef Name="status" />
+            <PropertyRef Name="groupname" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="headportrait" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="groupid" Type="Int32" Nullable="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Boolean" Nullable="false" />
+          <Property Name="groupname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_sys_arragement_sys_usergroup">
+          <End Type="MusicDatabaseModel.sys_usergroup" Role="sys_usergroup" Multiplicity="1" />
+          <End Type="MusicDatabaseModel.sys_arragement" Role="sys_arragement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sys_usergroup">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sys_arragement">
+              <PropertyRef Name="usergroup_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sys_arragement_sys_userinfo">
+          <End Type="MusicDatabaseModel.sys_userinfo" Role="sys_userinfo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MusicDatabaseModel.sys_arragement" Role="sys_arragement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sys_userinfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sys_arragement">
+              <PropertyRef Name="userinfo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sys_authority_sys_function">
+          <End Type="MusicDatabaseModel.sys_function" Role="sys_function" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MusicDatabaseModel.sys_authority" Role="sys_authority" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sys_function">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sys_authority">
+              <PropertyRef Name="function_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sys_authority_sys_usergroup">
+          <End Type="MusicDatabaseModel.sys_usergroup" Role="sys_usergroup" Multiplicity="1" />
+          <End Type="MusicDatabaseModel.sys_authority" Role="sys_authority" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sys_usergroup">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sys_authority">
+              <PropertyRef Name="usergroup_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sys_userlog_sys_userinfo">
+          <End Type="MusicDatabaseModel.sys_userinfo" Role="sys_userinfo" Multiplicity="1" />
+          <End Type="MusicDatabaseModel.sys_userlog" Role="sys_userlog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sys_userinfo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sys_userlog">
+              <PropertyRef Name="userinfo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MusicDatabaseModelStoreContainer" CdmEntityContainer="MusicDatabaseEntities">
+          <EntitySetMapping Name="sys_arragement">
+            <EntityTypeMapping TypeName="MusicDatabaseModel.sys_arragement">
+              <MappingFragment StoreEntitySet="sys_arragement">
+                <ScalarProperty Name="usergroup_id" ColumnName="usergroup_id" />
+                <ScalarProperty Name="userinfo_id" ColumnName="userinfo_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_authority">
+            <EntityTypeMapping TypeName="MusicDatabaseModel.sys_authority">
+              <MappingFragment StoreEntitySet="sys_authority">
+                <ScalarProperty Name="insert" ColumnName="insert" />
+                <ScalarProperty Name="delete" ColumnName="delete" />
+                <ScalarProperty Name="edit" ColumnName="edit" />
+                <ScalarProperty Name="display" ColumnName="display" />
+                <ScalarProperty Name="function_id" ColumnName="function_id" />
+                <ScalarProperty Name="usergroup_id" ColumnName="usergroup_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_function">
+            <EntityTypeMapping TypeName="MusicDatabaseModel.sys_function">
+              <MappingFragment StoreEntitySet="sys_function">
+                <ScalarProperty Name="sequence" ColumnName="sequence" />
+                <ScalarProperty Name="arrow" ColumnName="arrow" />
+                <ScalarProperty Name="ico" ColumnName="ico" />
+                <ScalarProperty Name="function_id" ColumnName="function_id" />
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="controller" ColumnName="controller" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_usergroup">
+            <EntityTypeMapping TypeName="MusicDatabaseModel.sys_usergroup">
+              <MappingFragment StoreEntitySet="sys_usergroup">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_userinfo">
+            <EntityTypeMapping TypeName="MusicDatabaseModel.sys_userinfo">
+              <MappingFragment StoreEntitySet="sys_userinfo">
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="personalinformation" ColumnName="personalinformation" />
+                <ScalarProperty Name="homeaddress" ColumnName="homeaddress" />
+                <ScalarProperty Name="qqnumber" ColumnName="qqnumber" />
+                <ScalarProperty Name="officephone" ColumnName="officephone" />
+                <ScalarProperty Name="mobilephone" ColumnName="mobilephone" />
+                <ScalarProperty Name="datebirth" ColumnName="datebirth" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="headportrait" ColumnName="headportrait" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_userlog">
+            <EntityTypeMapping TypeName="MusicDatabaseModel.sys_userlog">
+              <MappingFragment StoreEntitySet="sys_userlog">
+                <ScalarProperty Name="operationmethod" ColumnName="operationmethod" />
+                <ScalarProperty Name="modifytime" ColumnName="modifytime" />
+                <ScalarProperty Name="computername" ColumnName="computername" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="userinfo_id" ColumnName="userinfo_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MusicDatabaseModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_vw_userinfo">
+            <EntityTypeMapping TypeName="MusicDatabaseModel.sys_vw_userinfo">
+              <MappingFragment StoreEntitySet="sys_vw_userinfo">
+                <ScalarProperty Name="groupname" ColumnName="groupname" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="groupid" ColumnName="groupid" />
+                <ScalarProperty Name="headportrait" ColumnName="headportrait" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

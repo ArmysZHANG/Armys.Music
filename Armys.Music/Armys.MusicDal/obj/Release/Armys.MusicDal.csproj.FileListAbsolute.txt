@@ -1,0 +1,14 @@
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\bin\Release\Armys.MusicDal.dll.config
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\bin\Release\Armys.MusicDal.dll
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\bin\Release\Armys.MusicDal.pdb
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\bin\Release\Armys.MusicEntity.dll
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\bin\Release\EntityFramework.dll
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\bin\Release\EntityFramework.SqlServer.dll
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\bin\Release\Armys.MusicEntity.pdb
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\bin\Release\EntityFramework.xml
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\bin\Release\EntityFramework.SqlServer.xml
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\obj\Release\Armys.MusicDal.csprojResolveAssemblyReference.cache
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\obj\Release\Armys.MusicDal.dll
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\obj\Release\Armys.MusicDal.pdb
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\bin\Release\Armys.MusicTool.dll
+D:\WebStudy\Armys\Armys.Music\Armys.MusicDal\bin\Release\Armys.MusicTool.pdb

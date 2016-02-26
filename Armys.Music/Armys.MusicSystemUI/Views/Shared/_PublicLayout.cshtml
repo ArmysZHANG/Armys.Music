@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/home/css")
+</head>
+<body class="gray-bg">
+    @RenderBody()
+    @Scripts.Render("~/public/script")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

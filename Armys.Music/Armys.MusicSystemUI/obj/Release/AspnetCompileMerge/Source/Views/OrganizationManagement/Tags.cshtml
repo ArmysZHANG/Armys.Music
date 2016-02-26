@@ -1,0 +1,105 @@
+﻿@using Armys.MusicDal
+@{
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<div class="ibox-content">
+    <div class="dd" id="nestable">
+        <div class="m-b-md">
+            <span class="label label-danger">可以根据自己的习惯，拖动来设计自己的菜单。</span>
+            <span class="pull-right padding-l10">
+                <div class="onoffswitch">
+                    全选
+                </div>
+            </span>
+            <span class="pull-right padding-l10">
+                <div class="onoffswitch">
+                    删除
+                </div>
+            </span>
+            <span class="pull-right padding-l10">
+                <div class="onoffswitch">
+                    修改
+                </div>
+            </span>
+            <span class="pull-right padding-l10">
+                <div class="onoffswitch">
+                    创建
+                </div>
+            </span>
+            <span class="pull-right padding-l10">
+                <div class="onoffswitch">
+                    读取
+                </div>
+            </span>
+        </div>
+        <ol class="dd-list">
+            @{
+                var userList = Model as List<sys_function>;
+                if (userList != null)
+                {
+                    foreach (var item in userList)
+                    {
+                        <li class="dd-item dd3-item" data-id="@item.id">
+                            <div class="dd3-content">
+                                <span class="label label-info"><i class="@item.ico"></i></span> @item.name
+                                <span class="pull-right padding-l10">
+                                    <div class="onoffswitch">
+                                        <input name="states" class="onoffswitch-checkbox" id="all_@item.id" type="checkbox">
+                                        <label class="onoffswitch-label" for="all_@item.id">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </span>
+                                <span class="pull-right padding-l10">
+                                    <div class="onoffswitch">
+                                        <input name="states" class="onoffswitch-checkbox" id="delete_@item.id" type="checkbox">
+                                        <label class="onoffswitch-label" for="delete_@item.id">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </span>
+                                <span class="pull-right padding-l10">
+                                    <div class="onoffswitch">
+                                        <input name="states" class="onoffswitch-checkbox" id="update_@item.id" type="checkbox">
+                                        <label class="onoffswitch-label" for="update_@item.id">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </span>
+                                <span class="pull-right padding-l10">
+                                    <div class="onoffswitch">
+                                        <input name="states" class="onoffswitch-checkbox" id="create_@item.id" type="checkbox">
+                                        <label class="onoffswitch-label" for="create_@item.id">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </span>
+                                <span class="pull-right padding-l10">
+                                    <div class="onoffswitch">
+                                        <input name="states" class="onoffswitch-checkbox" id="read_@item.id" type="checkbox">
+                                        <label class="onoffswitch-label" for="read_@item.id">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="dd-handle dd3-handle">Drag</div>
+                            <ol class="dd-list" style=""></ol>
+                        </li>
+                    }
+                }
+            }
+        </ol>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/nestable/jquery.nestable.js"></script>
+    <script src="~/Scripts/OrganizationManagement/tags.js"></script>
+}

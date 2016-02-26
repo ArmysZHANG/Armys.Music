@@ -1,0 +1,141 @@
+﻿@using Armys.MusicDal
+@using Armys.MusicEntity
+@{
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<div class="ibox-content">
+    <div class="dd" id="nestable">
+        <div class="m-b-md">
+            <span class="label label-danger">可以根据自己的习惯，拖动来设计自己的菜单。</span>
+            <span class="pull-right padding-l10">
+                <div class="onoffswitch">
+                    全选
+                </div>
+            </span>
+            <span class="pull-right padding-l10">
+                <div class="onoffswitch">
+                    删除
+                </div>
+            </span>
+            <span class="pull-right padding-l10">
+                <div class="onoffswitch">
+                    修改
+                </div>
+            </span>
+            <span class="pull-right padding-l10">
+                <div class="onoffswitch">
+                    创建
+                </div>
+            </span>
+            <span class="pull-right padding-l10">
+                <div class="onoffswitch">
+                    读取
+                </div>
+            </span>
+        </div>
+        <input id="group_Id" type="hidden" value="@ViewBag.group_Id" />
+        <ol class="dd-list">
+            @{
+                var userList = Model as List<SysFunctionEntity>;
+                if (userList != null)
+                {
+                    foreach (var item in userList)
+                    {
+                        <li class="dd-item dd3-item" data-id="@item.Id">
+                            <div class="dd3-content">
+                                <span class="label label-info"><i class="@item.Ico"></i></span> @item.Name
+                                <span class="pull-right padding-l10">
+                                    <div class="onoffswitch">
+                                        @if (item.Display && item.Delete && item.Insert && item.Edit)
+                                        {
+                                            <input name="states" checked="checked" class="onoffswitch-checkbox" id="all_@item.Id" type="checkbox">
+                                        }
+                                        else
+                                        {
+                                            <input name="states" class="onoffswitch-checkbox" id="all_@item.Id" type="checkbox">
+                                        }
+                                        <label class="onoffswitch-label" for="all_@item.Id">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </span>
+                                <span class="pull-right padding-l10">
+                                    <div class="onoffswitch">
+                                        @if (item.Delete)
+                                        {
+                                            <input name="states" checked="checked" class="onoffswitch-checkbox" id="delete_@item.Id" type="checkbox">
+                                        }
+                                        else
+                                        {
+                                            <input name="states" class="onoffswitch-checkbox" id="delete_@item.Id" type="checkbox">
+                                        }
+                                        <label class="onoffswitch-label" for="delete_@item.Id">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </span>
+                                <span class="pull-right padding-l10">
+                                    <div class="onoffswitch">
+                                        @if (item.Edit)
+                                        {
+                                            <input name="states" checked="checked" class="onoffswitch-checkbox" id="update_@item.Id" type="checkbox">
+                                        }
+                                        else
+                                        {
+                                            <input name="states" class="onoffswitch-checkbox" id="update_@item.Id" type="checkbox">
+                                        }
+                                        <label class="onoffswitch-label" for="update_@item.Id">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </span>
+                                <span class="pull-right padding-l10">
+                                    <div class="onoffswitch">
+                                        @if (item.Insert)
+                                        {
+                                            <input name="states" checked="checked" class="onoffswitch-checkbox" id="create_@item.Id" type="checkbox">
+                                        }
+                                        else
+                                        {
+                                            <input name="states" class="onoffswitch-checkbox" id="create_@item.Id" type="checkbox">
+                                        }
+                                        <label class="onoffswitch-label" for="create_@item.Id">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </span>
+                                <span class="pull-right padding-l10">
+                                    <div class="onoffswitch">
+                                        @if (item.Display)
+                                        {
+                                            <input name="states" checked="checked" class="onoffswitch-checkbox" id="read_@item.Id" type="checkbox">
+                                        }
+                                        else
+                                        {
+                                            <input name="states" class="onoffswitch-checkbox" id="read_@item.Id" type="checkbox">
+                                        }
+                                        <label class="onoffswitch-label" for="read_@item.Id">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="dd-handle dd3-handle">Drag</div>
+                            <ol class="dd-list" style=""></ol>
+                        </li>
+                    }
+                }
+            }
+        </ol>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/Scripts/nestable/jquery.nestable.js"></script>
+    <script src="~/Scripts/OrganizationManagement/tags.js"></script>
+}
